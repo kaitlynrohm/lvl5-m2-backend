@@ -1,7 +1,6 @@
-function riskRatingCalculator(jsonClaim) {
+function riskRatingCalculator({ claim_history }) {
   try {
     const incidentWords = ['collide', 'crash', 'scratch', 'bump', 'smash']
-    const { claim_history } = JSON.parse(jsonClaim)
 
     //words that end with e
     const validatedIncidentWords = incidentWords.map((word) => {
@@ -19,10 +18,10 @@ function riskRatingCalculator(jsonClaim) {
       return riskScore
     }, 0)
 
-    return JSON.stringify({ risk_rating: rating })
+    return { risk_rating: rating }
   } catch (err) {
     // returns a error json object
-    return JSON.stringify({ error: 'there is an error' })
+    return { error: 'there is an error' }
   }
 }
 

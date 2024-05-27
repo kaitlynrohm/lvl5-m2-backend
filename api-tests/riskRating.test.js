@@ -1,9 +1,7 @@
 const riskRatingCalculator = require('../api/riskRating')
 describe('API 2 Tests', () => {
   test('test should return an error json object', () => {
-    expect(riskRatingCalculator(1)).toBe(
-      JSON.stringify({ error: 'there is an error' })
-    )
+    expect(riskRatingCalculator(1)).toEqual({ error: 'there is an error' })
   })
   describe.each([
     [
@@ -23,9 +21,9 @@ describe('API 2 Tests', () => {
     'validate risk_rating counter and return a Json object from input Json object',
     (claimHistory, riskRating, testcase) => {
       test(`Test should check ${testcase} `, () => {
-        expect(
-          riskRatingCalculator(JSON.stringify({ claim_history: claimHistory }))
-        ).toBe(JSON.stringify({ risk_rating: riskRating }))
+        expect(riskRatingCalculator({ claim_history: claimHistory })).toEqual({
+          risk_rating: riskRating,
+        })
       })
     }
   )
