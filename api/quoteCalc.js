@@ -1,5 +1,8 @@
 const express = require("express");
-const router = express.Router();
+const bodyParser = require("body-parser");
+
+const app = express();
+app.use(bodyParser.json());
 
 function calculatePremium(car_value, risk_rating) {
   const yearly_premium = parseFloat(
@@ -9,7 +12,7 @@ function calculatePremium(car_value, risk_rating) {
   return { monthly_premium, yearly_premium };
 }
 
-router.post("/get_quote", (req, res) => {
+app.post("/api/get_quote", (req, res) => {
   console.log("Received request:", req.body); 
   const { car_value, risk_rating } = req.body;
 
@@ -25,4 +28,12 @@ router.post("/get_quote", (req, res) => {
   res.json(premiums);
 });
 
-module.exports = router;
+const PORT = process.env.PORT || 3000;
+
+if (require.main === module) {
+  app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+  });
+}
+
+module.exports = app;

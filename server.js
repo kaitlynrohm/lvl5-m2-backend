@@ -1,16 +1,18 @@
 // ====== Packages and imports ====== //
 const express = require("express");
-const cors = require("cors"); // Import cors middleware once
+const cors = require("cors");
 const app = express();
 require("dotenv").config();
 
-//Import routes
+ 
+
+// Import routes
 const carValueCalc = require("./routes/carValueCalc.js");
 const riskRatingCalc = require("./routes/riskRatingCalc.js");
 const quoteCalc = require("./routes/quoteCalc.js");
 
 // Middleware
-app.use(cors(process.env.SITE_URL));
+app.use(cors({ origin: process.env.SITE_URL || "*" })); //using * to allow all origins, may have fixed the bug in quoteCalc
 app.use(express.json());
 
 // =========== ENDPOINTS =========== //
@@ -19,14 +21,14 @@ app.get("/", (req, res) => {
   res.send("Hello, World!");
 });
 
-//Car value calculation api
-app.use(carValueCalc);
+// Car value calculation api
+app.use("/api", carValueCalc);
 
-//Risk rating calculation api
-app.use(riskRatingCalc);
+// Risk rating calculation api
+app.use("/api", riskRatingCalc);
 
-//Quote calculation api
-app.use(quoteCalc);
+// Quote calculation api
+app.use("/api", quoteCalc);
 
 // ============== PORT ============== //
 const PORT = process.env.PORT;
