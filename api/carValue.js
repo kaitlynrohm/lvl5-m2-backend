@@ -1,6 +1,15 @@
 // Function for car value calculation
 const carValueCalculator = (carInfo) => {
   console.log(carInfo);
+  const model = carInfo.model;
+  let year;
+
+  year = Number(carInfo.year);
+
+  if (!year) {
+    return "Error: invalid year - not a number";
+  }
+
   const alphabet = [
     "a",
     "b",
@@ -31,15 +40,24 @@ const carValueCalculator = (carInfo) => {
   ];
   let modelValue = 0;
 
-  for (let char of carInfo.model) {
+  for (let char of model) {
+    if (char.toLowerCase() === char.toUpperCase()) {
+      continue;
+    }
     alphabet.forEach((letter, i) => {
       if (char.toLowerCase() == letter) {
         modelValue = modelValue + i + 1;
       }
     });
   }
+
+  // test the year
+  if (year <= 1886) {
+    return "Error: invalid year - to low";
+  }
+
   // Finding the final total
-  const total = modelValue * 100 + carInfo.year;
+  const total = modelValue * 100 + year;
   return total;
 };
 
