@@ -25,4 +25,4 @@ function riskRatingCalculator({ claim_history }) {
   }
 }
 
-module.exports = riskRatingCalculator
+module.exports = { riskRatingCalculator }

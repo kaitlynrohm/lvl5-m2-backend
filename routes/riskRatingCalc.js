@@ -1,14 +1,13 @@
 const express = require('express')
 const router = express.Router()
+const risk = require('../api/riskRating')
 
-//Below is for get, change get to post for post request
-router.get('api url', (req, res) => {
-  //Api code
-})
-router.post('api url', (req, res) => {
-  riskRatingCalculator(req.body)
-    .then((result) => res.send(result))
-    .catch((err) => console.error(err))
+router.post('/', (req, res) => {
+  try {
+    res.send(risk.riskRatingCalculator(req.body))
+  } catch (err) {
+    res.status(500).send({ error: 'Internal Server Error' })
+  }
 })
 
 module.exports = router
