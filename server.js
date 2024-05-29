@@ -10,7 +10,7 @@ const riskRatingCalc = require("./routes/riskRatingCalc.js");
 const quoteCalc = require("./routes/quoteCalc.js");
 
 // Middleware
-app.use(cors(process.env.SITE_URL));
+app.use(cors());
 app.use(express.json());
 
 // =========== ENDPOINTS =========== //
