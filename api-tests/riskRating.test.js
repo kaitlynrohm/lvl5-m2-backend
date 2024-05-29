@@ -1,4 +1,4 @@
-const riskRatingCalculator = require('../api/riskRating')
+const { riskRatingCalculator } = require('../api/riskRating')
 describe('API 2 Tests', () => {
   test('test should return an error json object', () => {
     expect(riskRatingCalculator(1)).toEqual({ error: 'there is an error' })
