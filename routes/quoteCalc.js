@@ -9,8 +9,8 @@ function calculatePremium(car_value, risk_rating) {
   return { monthly_premium, yearly_premium };
 }
 
-router.post("/get_quote", (req, res) => {
-  console.log("Received request:", req.body); 
+//validation separated from the routing logic after review
+function validateRequest(req, res, next) {
   const { car_value, risk_rating } = req.body;
 
   if (typeof car_value !== "number" || car_value <= 0) {
@@ -20,6 +20,13 @@ router.post("/get_quote", (req, res) => {
   if (typeof risk_rating !== "number" || risk_rating < 1 || risk_rating > 5) {
     return res.status(400).json({ error: "Invalid risk rating" });
   }
+
+  next();
+}
+
+router.post("/get_quote", validateRequest, (req, res) => {
+  console.log("Received request:", req.body);
+  const { car_value, risk_rating } = req.body;
 
   const premiums = calculatePremium(car_value, risk_rating);
   res.json(premiums);

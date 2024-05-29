@@ -1,6 +1,7 @@
 const request = require("supertest");
 const app = require("../server");
 
+
 describe("POST /api/get_quote", () => {
   it("should return the correct premiums for valid input", async () => {
     const res = await request(app)
