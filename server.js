@@ -1,3 +1,4 @@
+
 // ====== Packages and imports ====== //
 const express = require('express')
 const cors = require('cors') // Import cors middleware once
@@ -41,3 +42,5 @@ app
       console.log('Server Errors: ', error)
     }
   })
+
+module.exports = app;
