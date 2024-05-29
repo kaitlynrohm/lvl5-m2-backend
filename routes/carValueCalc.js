@@ -8,7 +8,7 @@ router.post("/api/carValueCalc", (req, res) => {
   const model = req.body.model;
   const year = req.body.year;
   const result = carValueCalculator({ model: model, year: year });
-  res.send(result);
+  res.status(200).send(JSON.stringify(result));
 });
 
 module.exports = router;
