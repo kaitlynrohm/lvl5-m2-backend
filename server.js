@@ -1,28 +1,46 @@
-const express = require("express");
-const cors = require("cors");
-require("dotenv").config();
 
-const app = express(); // Initialize app first
+// ====== Packages and imports ====== //
+const express = require('express')
+const cors = require('cors') // Import cors middleware once
+const app = express()
+require('dotenv').config()
 
-// Import routes
-const quoteCalc = require("./routes/quoteCalc.js");
+//Import routes
+const carValueCalc = require('./routes/carValueCalc.js')
+const riskRatingCalc = require('./routes/riskRatingCalc.js')
+const quoteCalc = require('./routes/quoteCalc.js')
 
 // Middleware
-app.use(cors({ origin: process.env.SITE_URL || "*" }));
-app.use(express.json());
+app.use(cors())
+app.use(express.json())
 
 // =========== ENDPOINTS =========== //
-app.get("/", (req, res) => {
-  res.send("Hello, World!");
-});
+// Initial setup in Postman
+app.get('/', (req, res) => {
+  res.send('Hello, World!')
+})
 
-// Quote calculation api
-app.use(quoteCalc);
+//Car value calculation api
+app.use(carValueCalc)
+
+//Risk rating calculation api
+app.use('/risk_rating', riskRatingCalc)
+
+//Quote calculation api
+app.use(quoteCalc)
 
 // ============== PORT ============== //
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`Server is alive on http://localhost:${PORT}`);
-});
+const PORT = 3000 || process.env.PORT
+app
+  .listen(PORT, () => {
+    console.log(`Server is alive on http://localhost:${PORT}`)
+  })
+  .on('error', (error) => {
+    if (error.code === 'EADDRINUSE') {
+      console.log('PORT is already in use.')
+    } else {
+      console.log('Server Errors: ', error)
+    }
+  })
 
 module.exports = app;
