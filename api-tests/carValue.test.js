@@ -1,23 +1,26 @@
 const carValueCalculator = require("../api/carValue");
 
 describe("API 1 tests", () => {
-  test("Sunny day scenario", () => {
-    expect(carValueCalculator({ model: "Civic", year: 2020 })).toEqual(6620);
-  });
-  test("Numbers only is ok", () => {
-    expect(carValueCalculator({ model: "911", year: 2020 })).toEqual(2020);
-  });
-  test("Test case: '911', 2020. expected outcome 2020. Test description: Numbers and letters only is ok", () => {
-    expect(carValueCalculator({ model: "911c", year: "2020" })).toEqual(2320);
-  });
-  test("negative year", () => {
-    expect(carValueCalculator({ model: "Task-force", year: "-987" })).toEqual(
-      "Error: invalid year - to low"
-    );
-  });
-  test("Test case: 'C200', 'twenty twenty'. expected outcome error message. Test description: Wrong data type", () => {
-    expect(
-      carValueCalculator({ model: "C200", year: "twenty twenty" })
-    ).toEqual("Error: invalid year - not a number");
-  });
+  describe.each([
+    ["Sunny day scenario", { model: "Civic", year: "2020" }, 6620],
+    ["Numbers only is ok", { model: "911", year: "2020" }, 2020],
+    ["Numbers and letters only is ok", { model: "911c", year: "2020" }, 2320],
+    [
+      "negative year",
+      { model: "C200", year: "-987" },
+      "Error: invalid year - to low",
+    ],
+    [
+      "Wrong data type",
+      { model: "C200", year: "twenty twenty" },
+      "Error: invalid year - not a number",
+    ],
+  ])(
+    "Ensure all test cases return correct car value",
+    (testCase, carInfo, result) => {
+      test(`Test case should check ${testCase}`, () => {
+        expect(carValueCalculator(carInfo)).toEqual(result);
+      });
+    }
+  );
 });
