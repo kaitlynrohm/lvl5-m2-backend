@@ -8,15 +8,17 @@ const app = express(); // Initialize app first
 const quoteCalc = require("./routes/quoteCalc.js");
 
 // Middleware
-app.use(cors({ origin: process.env.SITE_URL || "*" }));
+app.use(cors());
 app.use(express.json());
+
+
 
 // =========== ENDPOINTS =========== //
 app.get("/", (req, res) => {
   res.send("Hello, World!");
 });
 
-// Quote calculation api
+// // Quote calculation api
 app.use(quoteCalc);
 
 // ============== PORT ============== //
@@ -26,3 +28,5 @@ app.listen(PORT, () => {
 });
 
 module.exports = app;
+
+
